@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff4757;
+            --secondary: #ff6b81;
+            --dark: #2f3542;
+            --light: #f1f2f6;
+            --success: #2ed573;
+            --warning: #ffa502;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .app-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative; /* This is needed for absolute positioning of child elements */
+}
+
+/* Add this new style for the home button */
+.home-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    z-index: 10;
+    box-shadow: 0 3px 10px rgba(255, 71, 87, 0.3);
+}
+
+.home-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+}
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            color: var(--dark);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .header::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+
+        .sos-container {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 180px;
+            border: 2px solid rgba(255, 71, 87, 0.4);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+
+        .pulse-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(0.9);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .sos-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .sos-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.5);
+        }
+
+        .sos-button:active {
+            transform: scale(0.95);
+        }
+
+        .sos-button .symbol {
+            font-size: 40px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .countdown {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 15px 0;
+            text-align: center;
+            display: none;
+            animation: pulse-text 1s infinite alternate;
+        }
+
+        @keyframes pulse-text {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .action-button {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1) 0%, rgba(255, 107, 129, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+
+        .action-button:hover::before {
+            opacity: 1;
+        }
+
+        .action-button .symbol {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .location-results {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .location-results h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .location-results h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .police-station {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .police-station:last-child {
+            border-bottom: none;
+        }
+
+        .police-station strong {
+            color: var(--dark);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .police-station strong i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .police-station .distance {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .police-station .phone {
+            color: var(--dark);
+            opacity: 0.8;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .emergency-contacts {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .emergency-contacts h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .emergency-contacts h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 71, 87, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: var(--primary);
+        }
+
+        .contact-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .contact-relation {
+            font-size: 0.8rem;
+            color: rgba(47, 53, 66, 0.7);
+        }
+
+        .contact-action {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-action:hover {
+            background: var(--secondary);
+        }
+
+        .safety-tips {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .safety-tips h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .safety-tips h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .tips-list {
+            list-style-position: inside;
+            padding-left: 5px;
+        }
+
+        .tips-list li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            color: rgba(47, 53, 66, 0.6);
+            font-size: 0.8rem;
+        }
+
+        .emergency-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .modal-btn-secondary {
+            background: white;
+            color: var(--dark);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--light);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @media (max-width: 480px) {
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Home Button -->
+        <a href="dashboard.html" class="home-button" title="Go to Dashboard">
+            <i class="fas fa-home"></i>
+        </a>
+    
+        <!-- Rest of your existing HTML content -->
+        
+        <!-- All other existing elements... -->
+    </div>
+    <div class="app-container">
+        <div class="header">
+            <h1><i class="fas fa-shield-alt"></i> Emergency SOS</h1>
+            <p>Your personal safety companion</p>
+        </div>
+
+        <div class="sos-container">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <button class="sos-button" id="sosBtn">
+                <div class="symbol"><i class="fas fa-bell"></i></div>
+                EMERGENCY
+            </button>
+        </div>
+
+        <div class="countdown" id="countdown"></div>
+
+        <div class="action-buttons">
+            <button class="action-button" onclick="callEmergency('police')">
+                <div class="symbol"><i class="fas fa-phone-alt"></i></div>
+                Call Police
+            </button>
+
+            <button class="action-button" onclick="showContactsModal()">
+                <div class="symbol"><i class="fas fa-comment-alt"></i></div>
+                Alert Contacts
+            </button>
+
+            <button class="action-button" onclick="findNearbyPolice()">
+                <div class="symbol"><i class="fas fa-map-marker-alt"></i></div>
+                Nearby Help
+            </button>
+
+            <button class="action-button" onclick="showSafetyTips()">
+                <div class="symbol"><i class="fas fa-lightbulb"></i></div>
+                Safety Tips
+            </button>
+        </div>
+
+        <div class="location-results" id="locationResults">
+            <h3><i class="fas fa-map-pin"></i> Nearby Help Locations</h3>
+            <div id="policeStations"></div>
+        </div>
+
+        <div class="emergency-contacts">
+            <h3><i class="fas fa-user-friends"></i> Emergency Contacts</h3>
+            <ul class="contact-list" id="contactList">
+                <!-- Contacts will be added here by JavaScript -->
+            </ul>
+        </div>
+
+        <div class="safety-tips" id="safetyTips" style="display: none;">
+            <h3><i class="fas fa-info-circle"></i> Safety Tips</h3>
+            <ul class="tips-list">
+                <li>Always be aware of your surroundings</li>
+                <li>Share your live location with trusted contacts</li>
+                <li>Trust your instincts - if something feels wrong, it probably is</li>
+                <li>Have emergency numbers saved for quick access</li>
+                <li>Plan your route before going out</li>
+                <li>Keep your phone charged when traveling</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Your safety is our priority. Stay alert, stay safe.</p>
+        </div>
+    </div>
+
+    <!-- Emergency Alert Modal -->
+    <div class="emergency-modal" id="emergencyModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2><i class="fas fa-exclamation-triangle"></i> Emergency Alert!</h2>
+            <p id="modalMessage">Emergency alert will be sent to your contacts with your current location.</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="confirmEmergency()">Send Alert</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts Modal -->
+    <div class="emergency-modal" id="contactsModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2><i class="fas fa-user-friends"></i> Alert Contacts</h2>
+            <p>Select contacts to notify in emergency:</p>
+            <div id="contactsChecklist" style="text-align: left; margin-bottom: 20px;">
+                <!-- Contacts checklist will be added here -->
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="sendToSelectedContacts()">Send Alert</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SOS Button with countdown
+        const sosBtn = document.getElementById('sosBtn');
+        const countdown = document.getElementById('countdown');
+        const emergencyModal = document.getElementById('emergencyModal');
+        const contactsModal = document.getElementById('contactsModal');
+        const modalMessage = document.getElementById('modalMessage');
+        let holdTimer;
+        let emergencyTriggered = false;
+
+        // Sample emergency contacts
+        const emergencyContacts = [
+            { name: "Swapna", relation: "Sister", phone: "9923456789" },
+            { name: "laxmi", relation: "Mother", phone: "9876543218" },
+            { name: "Akhila", relation: "Friend", phone: "9122334455" },
+            { name: "Local Police", relation: "Emergency", phone: "100" }
+        ];
+
+        // Initialize the app
+        function initApp() {
+            populateContacts();
+            setupEventListeners();
+        }
+
+        // Populate emergency contacts list
+        function populateContacts() {
+            const contactList = document.getElementById('contactList');
+            contactList.innerHTML = '';
+            
+            emergencyContacts.forEach(contact => {
+                const li = document.createElement('li');
+                li.className = 'contact-item';
+                li.innerHTML = `
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="contact-name">${contact.name}</div>
+                            <div class="contact-relation">${contact.relation}</div>
+                        </div>
+                    </div>
+                    <button class="contact-action" onclick="callEmergency('${contact.phone}')">
+                        <i class="fas fa-phone-alt"></i> Call
+                    </button>
+                `;
+                contactList.appendChild(li);
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            sosBtn.addEventListener('mousedown', startSOS);
+            sosBtn.addEventListener('touchstart', startSOS);
+            
+            document.addEventListener('mouseup', cancelSOS);
+            document.addEventListener('touchend', cancelSOS);
+            
+            // Prevent context menu on long press
+            sosBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+        }
+
+        // Start SOS countdown
+        function startSOS(e) {
+            e.preventDefault();
+            if (emergencyTriggered) return;
+            
+            let seconds = 3;
+            countdown.textContent = 'Hold for 3 seconds to send emergency alert...';
+            countdown.style.display = 'block';
+            sosBtn.classList.add('shake');
+
+            holdTimer = setInterval(() => {
+                seconds--;
+                countdown.textContent = 'Hold for  seconds to send emergency alert...';
+
+                if (seconds <= 0) {
+                    clearInterval(holdTimer);
+                    countdown.style.display = 'none';
+                    showEmergencyModal();
+                    emergencyTriggered = true;
+                    setTimeout(() => emergencyTriggered = false, 3000);
+                }
+            }, 1000);
+        }
+
+        // Cancel SOS
+        function cancelSOS() {
+            if (holdTimer) {
+                clearInterval(holdTimer);
+                countdown.style.display = 'none';
+                sosBtn.classList.remove('shake');
+            }
+        }
+
+        // Show emergency modal
+        function showEmergencyModal() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        modalMessage.innerHTML = `Emergency alert will be sent with your current location:<br>
+                        <small>Latitude: ${lat.toFixed(4)}, Longitude: ${lng.toFixed(4)}</small><br>
+                        <a href="https://maps.google.com/?q=${lat},${lng}" target="_blank">View on Map</a>`;
+                        emergencyModal.style.display = 'flex';
+                    },
+                    () => {
+                        modalMessage.textContent = "Emergency alert will be sent to your contacts (location unavailable)";
+                        emergencyModal.style.display = 'flex';
+                    }
+                );
+            } else {
+                modalMessage.textContent = "Emergency alert will be sent to your contacts (location unavailable)";
+                emergencyModal.style.display = 'flex';
+            }
+        }
+
+        // Confirm emergency alert
+        function confirmEmergency() {
+            closeModal();
+            alert("EMERGENCY ALERT SENT to your contacts with your location!");
+            // In a real app, this would send alerts to emergency contacts
+        }
+
+        // Show contacts modal
+        function showContactsModal() {
+            const checklist = document.getElementById('contactsChecklist');
+            checklist.innerHTML = '';
+            
+            emergencyContacts.forEach((contact, index) => {
+                const div = document.createElement('div');
+                div.style.margin = '10px 0';
+                div.innerHTML = `
+                    <input type="checkbox" id="contact-${index}" checked>
+                    <label for="contact-${index}">${contact.name} (${contact.relation}) - ${contact.phone}</label>
+                `;
+                checklist.appendChild(div);
+            });
+            
+            contactsModal.style.display = 'flex';
+        }
+
+        // Send to selected contacts
+        function sendToSelectedContacts() {
+            closeModal();
+            alert("Message sent to selected contacts!");
+        }
+
+        // Close modal
+        function closeModal() {
+            emergencyModal.style.display = 'none';
+            contactsModal.style.display = 'none';
+        }
+
+        // Call emergency number
+        function callEmergency(number) {
+            if (number === 'police') {
+                alert("Calling police emergency number...");
+            } else {
+                alert("Calling ${number}...");
+            }
+        }
+
+        // Find nearby police stations
+        function findNearbyPolice() {
+            document.getElementById('locationResults').style.display = 'block';
+            
+            // Mock data for nearby help locations
+            const policeStations = document.getElementById('policeStations');
+            policeStations.innerHTML = `
+                <div class="police-station">
+                    <strong><i class="fas fa-building"></i> Central Police Station</strong>
+                    <div class="distance"><i class="fas fa-map-marker-alt"></i> 1.2 km away</div>
+                    <div class="phone"><i class="fas fa-phone-alt"></i> Phone: 100</div>
+                </div>
+                <div class="police-station">
+                    <strong><i class="fas fa-female"></i> Women's Safety Police Station</strong>
+                    <div class="distance"><i class="fas fa-map-marker-alt"></i> 2.5 km away</div>
+                    <div class="phone"><i class="fas fa-phone-alt"></i> Phone: 1091</div>
+                </div>
+                <div class="police-station">
+                    <strong><i class="fas fa-shield-alt"></i> Local Police Outpost</strong>
+                    <div class="distance"><i class="fas fa-map-marker-alt"></i> 0.8 km away</div>
+                    <div class="phone"><i class="fas fa-phone-alt"></i> Phone: 112</div>
+                </div>
+                <div class="police-station">
+                    <strong><i class="fas fa-hospital"></i> Nearest Hospital</strong>
+                    <div class="distance"><i class="fas fa-map-marker-alt"></i> 3.1 km away</div>
+                    <div class="phone"><i class="fas fa-phone-alt"></i> Phone: 108</div>
+                </div>
+            `;
+            
+            // Scroll to results
+            document.getElementById('locationResults').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show safety tips
+        function showSafetyTips() {
+            const safetyTips = document.getElementById('safetyTips');
+            if (safetyTips.style.display === 'none') {
+                safetyTips.style.display = 'block';
+                safetyTips.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                safetyTips.style.display = 'none';
+            }
+        }
+
+        // Initialize the app when loaded
+        window.onload = initApp;
+    </script>
+</body>
+</html>

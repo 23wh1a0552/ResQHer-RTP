@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Safety Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ... (Your existing CSS styles) ... */
+        :root {
+            --primary-color: #ff416c;
+            --secondary-color: #ff4b2b;
+            --accent-color: #ff6b81;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+        }
+ 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark-color);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.2);
+        }
+
+        .input-container i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 12px;
+            text-align: left;
+            display: block;
+            margin-top: 5px;
+            height: 14px;
+            font-weight: 500;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(255, 75, 43, 0.3);
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.4s;
+        }
+
+        button:hover::after {
+            transform: translateX(0);
+        }
+
+        .signin-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signin-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+            transition: all 0.3s;
+        }
+
+        .signin-link a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .form-footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .required::after {
+            content: '*';
+            color: var(--primary-color);
+            margin-left: 3px;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--primary-color);
+            font-size: 22px;
+            transition: all 0.3s;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-button:hover {
+            color: white;
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+                margin-top: 10px;
+            }
+
+            .home-button {
+                top: 15px;
+                right: 15px;
+                font-size: 20px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-5px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="dashboard.html" class="home-button" title="Go to Dashboard">
+            <i class="fas fa-home"></i>
+        </a>
+
+        <h2>Register Here!</h2>
+        <form id="registrationForm" method="POST" action="/register">
+            <div class="input-container">
+                <label for="fullName" class="input-label required">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                <span class="error" id="nameError"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="email" class="input-label required">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="password" class="input-label required">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required minlength="6">
+                <i class="fas fa-eye" onclick="togglePassword('password', this)" aria-label="Toggle password visibility"></i>
+                <span class="error" id="passwordError"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="confirmPassword" class="input-label required">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required minlength="6">
+                <i class="fas fa-eye" onclick="togglePassword('confirmPassword', this)" aria-label="Toggle password visibility"></i>
+                <span class="error" id="confirmPasswordError"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="phone" class="input-label required">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required pattern="[0-9]{10}">
+                <span class="error" id="phoneError"></span>
+            </div>
+        
+            <div class="input-container">
+                <label class="input-label" style="color: var(--primary-color); font-weight: 600; margin-top: 20px; margin-bottom: 10px;">Emergency Contacts</label>
+            </div>
+        
+            <div class="input-container">
+                <label for="emergencyName1" class="input-label required">Contact 1 Name</label>
+                <input type="text" id="emergencyName1" name="emergencyName1" placeholder="Name of your emergency contact" required>
+                <span class="error" id="emergencyName1Error"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="emergencyPhone1" class="input-label required">Contact 1 Phone</label>
+                <input type="tel" id="emergencyPhone1" name="emergencyPhone1" placeholder="Phone number" required pattern="[0-9]{10}">
+                <span class="error" id="emergencyPhone1Error"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="emergencyName2" class="input-label required">Contact 2 Name</label>
+                <input type="text" id="emergencyName2" name="emergencyName2" placeholder="Name of secondary contact" required>
+                <span class="error" id="emergencyName2Error"></span>
+            </div>
+        
+            <div class="input-container">
+                <label for="emergencyPhone2" class="input-label required">Contact 2 Phone</label>
+                <input type="tel" id="emergencyPhone2" name="emergencyPhone2" placeholder="Phone number" required pattern="[0-9]{10}">
+                <span class="error" id="emergencyPhone2Error"></span>
+            </div>
+        
+            <button type="submit">
+                <i class="fas fa-user-plus" style="margin-right: 8px;"></i> Register Now
+            </button>
+        </form>
+        <div class="signin-link">
+            Already have an account? <a href="login.html">Sign in here</a>
+        </div>
+        <div class="form-footer">
+            Your safety is our priority. All information is securely stored and protected.
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(fieldId, icon) {
+            // ... (Your togglePassword function) ...
+            const passwordField = document.getElementById(fieldId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            // ... (Your form validation and submission code) ...
+            event.preventDefault();
+
+            let isValid = true;
+
+            const fields = {
+                fullName: document.getElementById("fullName"),
+                email: document.getElementById("email"),
+                password: document.getElementById("password"),
+                confirmPassword: document.getElementById("confirmPassword"),
+                phone: document.getElementById("phone"),
+                emergencyName1: document.getElementById("emergencyName1"),
+                emergencyPhone1: document.getElementById("emergencyPhone1"),
+                emergencyName2: document.getElementById("emergencyName2"),
+                emergencyPhone2: document.getElementById("emergencyPhone2")
+            };
+
+            const errorMap = {
+                nameError: "fullName",
+                emailError: "email",
+                passwordError: "password",
+                confirmPasswordError: "confirmPassword",
+                phoneError: "phone",
+                emergencyName1Error: "emergencyName1",
+                emergencyPhone1Error: "emergencyPhone1",
+                emergencyName2Error: "emergencyName2",
+                emergencyPhone2Error: "emergencyPhone2"
+            };
+
+            function setError(id, message) {
+                document.getElementById(id).innerText = message;
+                const inputId = errorMap[id];
+                if (inputId) {
+                    document.getElementById(inputId).classList.add("shake");
+                    setTimeout(() => document.getElementById(inputId).classList.remove("shake"), 500);
+                }
+                isValid = false;
+            }
+
+
+            function clearError(id) {
+                document.getElementById(id).innerText = "";
+            }
+
+            // Clear previous errors
+            for (let errorId in errorMap) {
+                clearError(errorId);
+            }
+
+            // Basic validation
+            if (fields.fullName.value.trim() === "") {
+                setError("nameError", "Full name is required.");
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(fields.email.value.trim())) {
+                setError("emailError", "Enter a valid email address.");
+            }
+
+            if (fields.password.value.length < 6) {
+                setError("passwordError", "Password must be at least 6 characters.");
+            }
+
+            if (fields.password.value !== fields.confirmPassword.value) {
+                setError("confirmPasswordError", "Passwords do not match.");
+            }
+
+            if (!/^\d{10}$/.test(fields.phone.value.trim())) {
+                setError("phoneError", "Enter a valid 10-digit phone number.");
+            }
+
+            if (fields.emergencyName1.value.trim() === "") {
+                setError("emergencyName1Error", "Contact name is required.");
+            }
+
+            if (!/^\d{10}$/.test(fields.emergencyPhone1.value.trim())) {
+                setError("emergencyPhone1Error", "Enter a valid 10-digit phone number.");
+            }
+
+            if (fields.emergencyName2.value.trim() === "") {
+                setError("emergencyName2Error", "Contact name is required.");
+            }
+
+            if (!/^\d{10}$/.test(fields.emergencyPhone2.value.trim())) {
+                setError("emergencyPhone2Error", "Enter a valid 10-digit phone number.");
+            }
+
+            if (!isValid) {
+                const invalidFields = document.querySelectorAll('.error:not(:empty)');
+                invalidFields.forEach(error => {
+                    const inputId = errorMap[error.id];
+                    const input = document.getElementById(inputId);
+                    input.style.borderColor = '#dc3545';
+                    input.classList.add('shake');
+                    setTimeout(() => {
+                        input.classList.remove('shake');
+                    }, 500);
+                });
+                return;
+            }
+
+            const formData = new FormData(document.getElementById("registrationForm"));
+
+            console.log("Form Data:", Object.fromEntries(formData));
+
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(formData).toString()
+})
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Registration successful!"); // Show success message
+                window.location.href = 'login.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+            });
+        });
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                const errorId = this.id + 'Error';
+                if (document.getElementById(errorId).innerText) {
+                    document.getElementById(errorId).innerText = '';
+                    this.style.borderColor = '#ddd';
+                }
+                
+            });
+        });
+    </script>
+</body>
+</html>

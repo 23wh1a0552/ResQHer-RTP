@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQHer - Women Safety App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        nav a i {
+            margin-right: 8px;
+            font-size: 16px; /* Match your text size */
+            width: 20px; /* Fixed width for alignment */
+            text-align: center;
+        }
+
+        :root {
+            --primary: #ff3366;
+            --primary-dark: #e6005c;
+            --primary-light: #ff80ab;
+            --secondary: #4CAF50;
+            --dark: #333;
+            --light: #f9f9f9;
+            --white: #fff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            
+            /* Dark mode variables */
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+            --text-dark: #f0f0f0;
+            --text-secondary-dark: #b0b0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            padding: 20px;
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--white);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        nav a i {
+            margin-right: 8px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"></path></svg>');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            background: var(--primary-dark);
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(230, 0, 92, 0.3);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(230, 0, 92, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-dark);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-dark);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .dark-mode .section-title p {
+            color: var(--text-secondary-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .dark-mode .feature-card {
+            background: var(--card-dark);
+            color: var(--text-dark);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover::before {
+            height: 10px;
+            background: var(--primary-dark);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 51, 102, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .dark-mode .feature-card h3 {
+            color: var(--primary-light);
+        }
+
+        .feature-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .dark-mode .feature-card p {
+            color: var(--text-secondary-dark);
+        }
+
+        /* Fake Call Button */
+        .fake-call-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            background: #3498db;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .fake-call-btn i {
+            margin-right: 8px;
+        }
+
+        .fake-call-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Fake Call Options */
+        .call-options {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .call-options.show {
+            display: block;
+        }
+
+        .caller-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .dark-mode .caller-name {
+            color: var(--text-dark);
+        }
+
+        /* Fake Call Modal */
+        .fake-call-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .fake-call-modal.show {
+            display: flex;
+        }
+
+        .call-screen {
+            background: linear-gradient(135deg, #4a6bff, #8e54e9);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .caller-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a6bff;
+            font-size: 40px;
+        }
+
+        .caller-name-modal {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .call-status {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .call-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .call-action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .answer-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .decline-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .answer-btn:hover {
+            transform: scale(1.1);
+            background-color: #27ae60;
+        }
+
+        .decline-btn:hover {
+            transform: scale(1.1);
+            background-color: #c0392b;
+        }
+
+        /* Voice Command Button */
+        .voice-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f5f5, #fff);
+        }
+
+        .dark-mode .voice-section {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        }
+
+        #voice-command-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        #voice-command-btn i {
+            margin-right: 10px;
+        }
+
+        #voice-command-btn:hover {
+            background: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        #voice-command-btn.listening {
+            animation: pulse 1.5s infinite;
+            background: #e74c3c;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .dark-mode footer {
+            background: #1a1a1a;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 15px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-bottom: 30px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 20px;
+            margin: 0 10px;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Location Status */
+        #locationStatus {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 5px;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .dark-mode #locationStatus {
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            nav {
+                justify-content: center;
+                margin-top: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                padding: 8px 15px;
+            }
+
+            .hero h2 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>ResQHer</span>
+            </div>
+            <nav>
+                <a href="register.html" id="nav-register">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Register</span>
+                </a>
+                <a href="login.html" id="nav-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+                <a href="sos.html" id="nav-sos">
+                    <i class="fas fa-bell"></i>
+                    <span>SOS Alert</span>
+                </a>
+                <a href="chatsupport.html" id="nav-chat">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat Support</span>
+                </a>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>ResQHer</h2>
+            <p>Your personal safety companion for emergencies and peace of mind</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="section-title">
+            <h2>Safety Features</h2>
+            <p>Comprehensive protection designed specifically for women's safety</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Live Location Sharing</h3>
+                <p>Share your location in real-time with trusted contacts for continuous safety.</p>
+                <button class="btn" onclick="getLocation()"><i class="fas fa-location-arrow"></i> Share Location</button>
+                <p id="locationStatus"></p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Fake Call</h3>
+                <p>Simulate an incoming call to discreetly exit uncomfortable situations.</p>
+                <button class="fake-call-btn" onclick="showFakeCallOptions()">
+                    <i class="fas fa-phone"></i> Fake Call
+                </button>
+                <div id="fakeCallOptions" class="call-options">
+                    <div class="caller-name">Choose Caller:</div>
+                    <button class="fake-call-btn" onclick="initiateFakeCall('Mom')"><i class="fas fa-female"></i> Mom</button>
+                    <button class="fake-call-btn" onclick="initiateFakeCall('Dad')"><i class="fas fa-male"></i> Dad</button>
+                    <button class="fake-call-btn" onclick="initiateFakeCall('Friend')"><i class="fas fa-user-friends"></i> Friend</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="voice-section">
+        <button id="voice-command-btn" onclick="startVoiceRecognition()">
+            <i class="fas fa-microphone"></i> Start Voice Command
+        </button>
+    </section>
+
+    <!-- Fake Call Modal -->
+    <div id="fakeCallModal" class="fake-call-modal">
+        <div class="call-screen">
+            <div class="caller-image">
+                <i class="fas fa-user" id="caller-icon"></i>
+            </div>
+            <div class="caller-name-modal" id="modal-caller-name">Mom</div>
+            <div class="call-status" id="call-status">Incoming call...</div>
+            <div class="call-actions">
+                <div class="call-action-btn answer-btn" onclick="answerFakeCall()">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="call-action-btn decline-btn" onclick="endFakeCall()">
+                    <i class="fas fa-phone-slash"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-shield-alt"></i> ResQHer
+            </div>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 ResQHer. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        // Theme Toggle Functionality
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        // Location sharing function
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById('locationStatus').innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            document.getElementById('locationStatus').innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById('locationStatus').innerHTML = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById('locationStatus').innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById('locationStatus').innerHTML = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById('locationStatus').innerHTML = "An unknown error occurred.";
+                    break;
+            }
+        }
+
+        // Fake Call Functionality
+        function showFakeCallOptions() {
+            const options = document.getElementById('fakeCallOptions');
+            options.classList.toggle('show');
+        }
+
+        let fakeCallTimer;
+        let fakeCallAnswered = false;
+
+        function initiateFakeCall(caller) {
+            const modal = document.getElementById('fakeCallModal');
+            const callerNameElement = document.getElementById('modal-caller-name');
+            const callStatusElement = document.getElementById('call-status');
+            
+            // Set caller name
+            callerNameElement.innerText = caller;
+            
+            // Set caller icon based on selection
+            const callerIcon = document.getElementById('caller-icon');
+            if (caller === 'Mom') {
+                callerIcon.className = 'fas fa-female';
+            } else if (caller === 'Dad') {
+                callerIcon.className = 'fas fa-male';
+            } else {
+                callerIcon.className = 'fas fa-user-friends';
+            }
+            
+            // Reset call status
+            fakeCallAnswered = false;
+            callStatusElement.innerText = "Incoming call...";
+            
+            // Show modal
+            modal.classList.add('show');
+            
+            // Auto-end call after 30 seconds if not answered
+            fakeCallTimer = setTimeout(() => {
+                if (!fakeCallAnswered) {
+                    endFakeCall();
+                }
+            }, 30000);
+        }
+
+        function answerFakeCall() {
+            const callStatusElement = document.getElementById('call-status');
+            
+            fakeCallAnswered = true;
+            callStatusElement.innerText = "Call in progress...";
+            
+            // In a real app, you would play a fake conversation audio here
+            console.log("Fake call answered");
+            
+            // Auto-end call after 1 minute
+            clearTimeout(fakeCallTimer);
+            fakeCallTimer = setTimeout(() => {
+                endFakeCall();
+            }, 60000);
+        }
+
+        function endFakeCall() {
+            const modal = document.getElementById('fakeCallModal');
+            const callStatusElement = document.getElementById('call-status');
+            
+            callStatusElement.innerText = "Call ended";
+            clearTimeout(fakeCallTimer);
+            
+            // Hide modal after 1 second
+            setTimeout(() => {
+                modal.classList.remove('show');
+            }, 1000);
+            
+            console.log("Fake call ended");
+        }
+
+        // Voice Recognition Logic
+        function startVoiceRecognition() {
+            const voiceBtn = document.getElementById('voice-command-btn');
+            
+            try {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US';
+                recognition.start();
+                voiceBtn.classList.add('listening');
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript.toLowerCase();
+                    console.log("Recognized Keyword:", transcript);
+                    voiceBtn.classList.remove('listening');
+                    
+                    // Handle commands
+                    if (transcript.includes('sos') || transcript.includes('emergency')) {
+                        alert("SOS Alert triggered!");
+                    } else if (transcript.includes('location') || transcript.includes('share')) {
+                        getLocation();
+                    } else if (transcript.includes('help') || transcript.includes('support')) {
+                        window.location.href = "chatsupport.html";
+                    } else if (transcript.includes('fake call') || transcript.includes('fake phone')) {
+                        showFakeCallOptions();
+                    }
+                }
+
+                recognition.onerror = function(event) {
+                    console.log("Error occurred in recognition: ", event.error);
+                    voiceBtn.classList.remove('listening');
+                    alert("Voice recognition error. Please try again.");
+                }
+                
+                recognition.onend = function() {
+                    voiceBtn.classList.remove('listening');
+                }
+            } catch (e) {
+                console.error("Voice recognition not supported:", e);
+                voiceBtn.classList.remove('listening');
+                alert("Voice recognition is not supported in your browser.");
+            }
+        }
+    </script>
+</body>
+</html>

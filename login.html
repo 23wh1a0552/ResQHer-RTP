@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Safety - Secure Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff416c;
+            --secondary: #ff4b2b;
+            --dark: #333;
+            --light: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark);
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in-out;
+            border: 1px solid #eee;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* NEW: Home Button Styles - Removed, as the goal is redirection after login */
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.1);
+        }
+
+        .input-container i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 12px;
+            text-align: left;
+            display: block;
+            margin-top: 5px;
+            height: 14px;
+            font-weight: 500;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 75, 43, 0.2);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login Here!</h2>
+        <form id="loginForm">
+            <div class="input-container">
+                <label for="email" class="input-label">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <div class="input-container">
+                <label for="password" class="input-label">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+                <i class="fas fa-eye" onclick="togglePassword('password', this)"></i>
+                <span class="error" id="passwordError"></span>
+            </div>
+
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="forgot-password.html">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit">
+                <i class="fas fa-lock" style="margin-right: 8px;"></i> Login
+            </button>
+        </form>
+
+        <div class="signup-link">
+            Don't have an account? <a href="register.html">Create one now</a>
+        </div>
+
+        <div class="security-note">
+            <i class="fas fa-shield-alt" style="color: var(--primary); margin-right: 5px;"></i>
+            Your safety is our priority. All login activities are securely encrypted.
+        </div>
+    </div>
+<script>
+    function togglePassword(fieldId, icon) {
+        const passwordField = document.getElementById(fieldId);
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        let isValid = true;
+
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const rememberInput = document.getElementById("remember");
+        const emailErrorSpan = document.getElementById("emailError");
+        const passwordErrorSpan = document.getElementById("passwordError");
+        const submitBtn = document.querySelector('button[type="submit"]');
+
+        function setError(element, message) {
+            element.innerText = message;
+            element.previousElementSibling.classList.add('shake');
+            setTimeout(() => element.previousElementSibling.classList.remove('shake'), 500);
+            isValid = false;
+        }
+
+        function clearError(element) {
+            element.innerText = "";
+        }
+
+        // Clear all errors
+        clearError(emailErrorSpan);
+        clearError(passwordErrorSpan);
+
+        // Email validation
+        if (!/^\S+@\S+\.\S+$/.test(emailInput.value)) {
+            setError(emailErrorSpan, "Please enter a valid email address.");
+        }
+
+        // Password validation
+        if (passwordInput.value.length < 8) {
+            setError(passwordErrorSpan, "Password must be at least 8 characters.");
+        } else if (!/\d/.test(passwordInput.value)) {
+            setError(passwordErrorSpan, "Password must contain at least 1 number.");
+        } else if (!/[!@#$%^&*]/.test(passwordInput.value)) {
+            setError(passwordErrorSpan, "Password must contain at least 1 special character.");
+        }
+
+        if (isValid) {
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Authenticating...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailInput.value,
+                        password: passwordInput.value
+                    }),
+                });
+
+                const data = await response.json();
+
+                submitBtn.innerHTML = '<i class="fas fa-lock" style="margin-right: 8px;"></i> Login';
+                submitBtn.disabled = false;
+
+                if (response.ok && data.redirect) {
+                    // Display success popup
+                    alert('Login successful!');
+                    // Redirect to the dashboard page after the popup
+                    window.location.href = data.redirect;
+                } else {
+                    // Display login error message in the UI (better than alert)
+                    if (data.message) {
+                        alert(`Login failed: ${data.message}`);
+                        // You could update a specific error element in your HTML here
+                        // document.getElementById('loginErrorMessage').innerText = data.message;
+                    } else {
+                        alert('Login failed. Please try again.');
+                        // document.getElementById('loginErrorMessage').innerText = 'Login failed. Please try again.';
+                    }
+                }
+            } catch (error) {
+                console.error('Error during login request:', error);
+                alert('An error occurred during login. Please try again later.');
+                submitBtn.innerHTML = '<i class="fas fa-lock" style="margin-right: 8px;"></i> Login';
+                submitBtn.disabled = false;
+            }
+        }
+    });
+
+    // Clear errors when user starts typing
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', function() {
+            const errorId = this.id + 'Error';
+            const errorElement = document.getElementById(errorId);
+            if (errorElement && errorElement.innerText) {
+                clearError(errorElement);
+            }
+            this.classList.remove('shake');
+        });
+    });
+</script>
+</body>
+</html>
